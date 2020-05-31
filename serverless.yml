@@ -1,0 +1,37 @@
+# Lambda Layers Stack
+service: lambda-layers-stack
+
+# Plugins
+plugins:
+  - serverless-offline
+
+# Provider
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage}
+  region: ${opt:region, 'eu-west-1'}
+
+# Layers & Package
+layers:
+  Source:
+    path: src
+    package:
+      include:
+        - 'nodejs/node_modules/**'
+
+package:
+  include:
+    - 'src/nodejs/**'
+    - '!src/nodejs/node_modules/**'
+  exclude:
+    - '**/*'
+
+# Functions
+functions:
+
+  # hello
+  hello:
+    handler: src/nodejs/handler.hello
+    layers:
+      - { Ref: SourceLambdaLayer }

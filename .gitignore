@@ -1,0 +1,8 @@
+# ignora all hidden
+**/.*
+# except these
+!.gitignore
+
+# package directories
+node_modules
+jspm_packages
